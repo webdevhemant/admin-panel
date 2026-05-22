@@ -2,7 +2,6 @@ import {
   LayoutDashboard,
   ListChecks,
   Users2,
-  Puzzle,
   Settings2,
   ServerCrash,
   UserCircle,
@@ -22,8 +21,8 @@ import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: 'Akshay Bendadi',
-    email: 'akshaybendadi@gmail.com',
+    name: 'Hemant Bendadi',
+    email: 'hemant.dev.upwork@gmail.com',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
@@ -61,11 +60,6 @@ export const sidebarData: SidebarData = {
           title: 'Users',
           url: '/users',
           icon: Users2,
-        },
-        {
-          title: 'Integrations',
-          url: '/apps',
-          icon: Puzzle,
         },
       ],
     },

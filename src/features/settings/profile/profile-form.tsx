@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from '@tanstack/react-router'
+import { Plus, Trash2 } from 'lucide-react'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -15,13 +16,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
 const profileFormSchema = z.object({
@@ -29,12 +23,10 @@ const profileFormSchema = z.object({
     .string('Please enter your username.')
     .min(2, 'Username must be at least 2 characters.')
     .max(30, 'Username must not be longer than 30 characters.'),
-  email: z.email({
-    error: (iss) =>
-      iss.input === undefined
-        ? 'Please select an email to display.'
-        : undefined,
-  }),
+  email: z
+    .string()
+    .min(1, 'Please enter your email.')
+    .email('Please enter a valid email address.'),
   bio: z.string().max(160).min(4),
   urls: z
     .array(
@@ -47,13 +39,11 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-// This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  bio: 'I own a computer.',
-  urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
-  ],
+  username: 'hemant',
+  email: 'hemant.dev.upwork@gmail.com',
+  bio: 'Full-stack developer. Building things on the web.',
+  urls: [{ value: 'https://github.com/webdevhemant' }],
 }
 
 export function ProfileForm() {
@@ -63,7 +53,7 @@ export function ProfileForm() {
     mode: 'onChange',
   })
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: 'urls',
     control: form.control,
   })
@@ -72,51 +62,51 @@ export function ProfileForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) => showSubmittedData(data))}
-        className='space-y-8'
+        className='space-y-6'
       >
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder='shadcn' {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <div className='grid gap-6 sm:grid-cols-2'>
+          <FormField
+            control={form.control}
+            name='username'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a verified email to display' />
-                  </SelectTrigger>
+                  <Input placeholder='hemant' {...field} />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                  <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                  <SelectItem value='m@support.com'>m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{' '}
-                <Link to='/'>email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormDescription>
+                  Your public display name. Changeable once every 30 days.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type='email'
+                    placeholder='hemant.dev.upwork@gmail.com'
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Manage emails in your{' '}
+                  <Link to='/settings/account' className='underline underline-offset-2'>
+                    account settings
+                  </Link>
+                  .
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name='bio'
@@ -127,50 +117,70 @@ export function ProfileForm() {
                 <Textarea
                   placeholder='Tell us a little bit about yourself'
                   className='resize-none'
+                  rows={3}
                   {...field}
                 />
               </FormControl>
               <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
+                Max 160 characters. You can <span className='font-medium'>@mention</span> others.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && 'sr-only')}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl className={cn(index !== 0 && 'mt-1.5')}>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
+          <FormLabel className='text-sm font-medium'>Links</FormLabel>
+          <FormDescription className='mt-1 mb-3 text-xs'>
+            Add links to your website, blog, or social profiles.
+          </FormDescription>
+          <div className='space-y-2'>
+            {fields.map((field, index) => (
+              <FormField
+                control={form.control}
+                key={field.id}
+                name={`urls.${index}.value`}
+                render={({ field }) => (
+                  <FormItem className='m-0'>
+                    <FormControl>
+                      <div className='flex items-center gap-2'>
+                        <Input
+                          placeholder='https://yoursite.com'
+                          className={cn(index !== 0 && 'mt-0')}
+                          {...field}
+                        />
+                        <Button
+                          type='button'
+                          variant='ghost'
+                          size='icon'
+                          className='size-9 shrink-0 text-muted-foreground hover:text-destructive'
+                          onClick={() => remove(index)}
+                        >
+                          <Trash2 className='size-4' />
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
           <Button
             type='button'
             variant='outline'
             size='sm'
-            className='mt-2'
+            className='mt-3 gap-1.5'
             onClick={() => append({ value: '' })}
           >
-            Add URL
+            <Plus className='size-3.5' />
+            Add link
           </Button>
         </div>
-        <Button type='submit'>Update profile</Button>
+
+        <Button type='submit' className='w-full sm:w-auto'>
+          Update profile
+        </Button>
       </form>
     </Form>
   )
