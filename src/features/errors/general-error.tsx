@@ -1,4 +1,5 @@
 import { useNavigate, useRouter } from '@tanstack/react-router'
+import { ServerCrash } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -14,20 +15,34 @@ export function GeneralError({
   const { history } = useRouter()
   return (
     <div className={cn('h-svh w-full', className)}>
-      <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>
+      <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-4'>
         {!minimal && (
-          <h1 className='text-[7rem] leading-tight font-bold'>500</h1>
+          <div className='flex h-20 w-20 items-center justify-center rounded-2xl bg-destructive/10'>
+            <ServerCrash className='h-10 w-10 text-destructive' />
+          </div>
         )}
-        <span className='font-medium'>Oops! Something went wrong {`:')`}</span>
-        <p className='text-center text-muted-foreground'>
-          We apologize for the inconvenience. <br /> Please try again later.
-        </p>
+        <div className='text-center'>
+          {!minimal && (
+            <p className='text-xs font-semibold uppercase tracking-widest text-destructive mb-2'>
+              Error 500
+            </p>
+          )}
+          <h1 className='text-2xl font-bold tracking-tight'>
+            Something went wrong
+          </h1>
+          <p className='mt-2 text-sm text-muted-foreground max-w-sm'>
+            An unexpected error occurred on our end. Please try again — if the
+            problem persists, contact support.
+          </p>
+        </div>
         {!minimal && (
-          <div className='mt-6 flex gap-4'>
-            <Button variant='outline' onClick={() => history.go(-1)}>
+          <div className='mt-2 flex gap-3'>
+            <Button variant='outline' size='sm' onClick={() => history.go(-1)}>
               Go Back
             </Button>
-            <Button onClick={() => navigate({ to: '/' })}>Back to Home</Button>
+            <Button size='sm' onClick={() => navigate({ to: '/' })}>
+              Back to Home
+            </Button>
           </div>
         )}
       </div>

@@ -1,4 +1,5 @@
 import { useNavigate, useRouter } from '@tanstack/react-router'
+import { Compass } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function NotFoundError() {
@@ -6,18 +7,27 @@ export function NotFoundError() {
   const { history } = useRouter()
   return (
     <div className='h-svh'>
-      <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>
-        <h1 className='text-[7rem] leading-tight font-bold'>404</h1>
-        <span className='font-medium'>Oops! Page Not Found!</span>
-        <p className='text-center text-muted-foreground'>
-          It seems like the page you're looking for <br />
-          does not exist or might have been removed.
-        </p>
-        <div className='mt-6 flex gap-4'>
-          <Button variant='outline' onClick={() => history.go(-1)}>
+      <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-4'>
+        <div className='flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-500/10'>
+          <Compass className='h-10 w-10 text-blue-500' />
+        </div>
+        <div className='text-center'>
+          <p className='text-xs font-semibold uppercase tracking-widest text-blue-500 mb-2'>
+            Error 404
+          </p>
+          <h1 className='text-2xl font-bold tracking-tight'>Page not found</h1>
+          <p className='mt-2 text-sm text-muted-foreground max-w-sm'>
+            The page you&apos;re looking for doesn&apos;t exist or may have
+            been moved. Double-check the URL and try again.
+          </p>
+        </div>
+        <div className='mt-2 flex gap-3'>
+          <Button variant='outline' size='sm' onClick={() => history.go(-1)}>
             Go Back
           </Button>
-          <Button onClick={() => navigate({ to: '/' })}>Back to Home</Button>
+          <Button size='sm' onClick={() => navigate({ to: '/' })}>
+            Back to Home
+          </Button>
         </div>
       </div>
     </div>

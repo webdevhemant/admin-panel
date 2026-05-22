@@ -1,7 +1,6 @@
 import { useState, type JSX } from 'react'
 import { useLocation, useNavigate, Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
@@ -34,7 +33,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       <div className='p-1 md:hidden'>
         <Select value={val} onValueChange={handleSelect}>
           <SelectTrigger className='h-12 sm:w-48'>
-            <SelectValue placeholder='Theme' />
+            <SelectValue placeholder='Section' />
           </SelectTrigger>
           <SelectContent>
             {items.map((item) => (
@@ -66,14 +65,13 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
               key={item.href}
               to={item.href}
               className={cn(
-                buttonVariants({ variant: 'ghost' }),
+                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                 pathname === item.href
-                  ? 'bg-muted hover:bg-accent'
-                  : 'hover:bg-accent hover:underline',
-                'justify-start'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:bg-accent hover:text-foreground'
               )}
             >
-              <span className='me-2'>{item.icon}</span>
+              <span className='shrink-0'>{item.icon}</span>
               {item.title}
             </Link>
           ))}
