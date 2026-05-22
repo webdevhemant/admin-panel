@@ -1,11 +1,11 @@
-# Horizon Panel
+# Haxon
 
 A modern, production-ready **SaaS platform admin dashboard** built with React 19, TanStack Router, shadcn/ui, and Tailwind CSS v4. Themed around a developer-facing SaaS product — tracking API usage, deployments, incidents, engineering tasks, and team members. Fully publicly accessible — no authentication required.
 
 
 ## What Is This Dashboard For?
 
-Horizon Panel simulates the internal admin interface of a SaaS platform. It covers the operational surface a platform team would need day-to-day:
+Haxon simulates the internal admin interface of a SaaS platform. It covers the operational surface a platform team would need day-to-day:
 
 | Area | What it tracks |
 |------|----------------|
