@@ -1,3 +1,4 @@
+import { ListChecks } from 'lucide-react'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -22,11 +23,16 @@ export function Tasks() {
 
       <Main className='flex flex-1 flex-col gap-4 sm:gap-6'>
         <div className='flex flex-wrap items-end justify-between gap-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Tasks</h2>
-            <p className='text-muted-foreground'>
-              Here&apos;s a list of your tasks for this month!
-            </p>
+          <div className='flex items-center gap-3'>
+            <div className='flex size-10 items-center justify-center rounded-xl border border-violet-500/20 bg-violet-500/10'>
+              <ListChecks className='size-5 text-violet-600 dark:text-violet-400' />
+            </div>
+            <div>
+              <h2 className='text-2xl font-bold tracking-tight'>Tasks</h2>
+              <p className='text-sm text-muted-foreground'>
+                Track and manage your work items for this sprint.
+              </p>
+            </div>
           </div>
           <TasksPrimaryButtons />
         </div>

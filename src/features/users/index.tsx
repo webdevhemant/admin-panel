@@ -1,4 +1,5 @@
 import { getRouteApi } from '@tanstack/react-router'
+import { Users2 } from 'lucide-react'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -28,11 +29,16 @@ export function Users() {
 
       <Main className='flex flex-1 flex-col gap-4 sm:gap-6'>
         <div className='flex flex-wrap items-end justify-between gap-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>User List</h2>
-            <p className='text-muted-foreground'>
-              Manage your users and their roles here.
-            </p>
+          <div className='flex items-center gap-3'>
+            <div className='flex size-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10'>
+              <Users2 className='size-5 text-primary' />
+            </div>
+            <div>
+              <h2 className='text-2xl font-bold tracking-tight'>Users</h2>
+              <p className='text-sm text-muted-foreground'>
+                Manage team members and their access levels.
+              </p>
+            </div>
           </div>
           <UsersPrimaryButtons />
         </div>
