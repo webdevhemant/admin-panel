@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 export function Logo({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      id='shadcn-admin-logo'
+      id='nexus-panel-logo'
       viewBox='0 0 24 24'
       xmlns='http://www.w3.org/2000/svg'
       height='24'
@@ -17,8 +17,10 @@ export function Logo({ className, ...props }: SVGProps<SVGSVGElement>) {
       className={cn('size-6', className)}
       {...props}
     >
-      <title>Shadcn-Admin</title>
-      <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
+      <title>Nexus Panel</title>
+      <polygon points='12 2 2 7 12 12 22 7 12 2' />
+      <polyline points='2 17 12 22 22 17' />
+      <polyline points='2 12 12 17 22 12' />
     </svg>
   )
 }

@@ -1,119 +1,118 @@
-# Shadcn Admin Dashboard
+# Nexus Panel
 
-Admin Dashboard UI crafted with Shadcn and Vite. Built with responsiveness and accessibility in mind.
+A modern, production-ready admin dashboard built with React 19, TanStack Router, shadcn/ui, and Tailwind CSS v4. Fully publicly accessible — no authentication required.
 
-![alt text](public/images/shadcn-admin.png)
-
-[![Sponsored by Clerk](https://img.shields.io/badge/Sponsored%20by-Clerk-5b6ee1?logo=clerk)](https://go.clerk.com/GttUAaK)
-
-I've been creating dashboard UIs at work and for my personal projects. I always wanted to make a reusable collection of dashboard UI for future projects; and here it is now. While I've created a few custom components, some of the code is directly adapted from ShadcnUI examples.
-
-> This is not a starter project (template) though. I'll probably make one in the future.
+![Nexus Panel Dashboard](public/images/shadcn-admin.png)
 
 ## Features
 
-- Light/dark mode
-- Responsive
-- Accessible
-- With built-in Sidebar component
-- Global search command
-- 10+ pages
-- Extra custom components
-- RTL support
-
-<details>
-<summary>Customized Components (click to expand)</summary>
-
-This project uses Shadcn UI components, but some have been slightly modified for better RTL (Right-to-Left) support and other improvements. These customized components differ from the original Shadcn UI versions.
-
-If you want to update components using the Shadcn CLI (e.g., `npx shadcn@latest add <component>`), it's generally safe for non-customized components. For the listed customized ones, you may need to manually merge changes to preserve the project's modifications and avoid overwriting RTL support or other updates.
-
-> If you don't require RTL support, you can safely update the 'RTL Updated Components' via the Shadcn CLI, as these changes are primarily for RTL compatibility. The 'Modified Components' may have other customizations to consider.
-
-### Modified Components
-
-- scroll-area
-- sonner
-- separator
-
-### RTL Updated Components
-
-- alert-dialog
-- calendar
-- command
-- dialog
-- dropdown-menu
-- select
-- table
-- sheet
-- sidebar
-- switch
-
-**Notes:**
-
-- **Modified Components**: These have general updates, potentially including RTL adjustments.
-- **RTL Updated Components**: These have specific changes for RTL language support (e.g., layout, positioning).
-- For implementation details, check the source files in `src/components/ui/`.
-- All other Shadcn UI components in the project are standard and can be safely updated via the CLI.
-
-</details>
+- **Dashboard** — Revenue charts, KPI cards, and recent sales analytics
+- **User Management** — Full CRUD with data tables, filtering, bulk actions
+- **Task Management** — Status tracking, import/export, and bulk operations
+- **App Integrations** — Overview of connected third-party applications
+- **Settings** — Profile, account, appearance, notifications, display preferences
+- **Theme System** — Light / dark / system modes with indigo/violet palette
+- **Layout Options** — Multiple sidebar variants and density settings
+- **Responsive** — Mobile-first design that works on all screen sizes
 
 ## Tech Stack
 
-**UI:** [ShadcnUI](https://ui.shadcn.com) (TailwindCSS + RadixUI)
+| Category | Technology |
+|----------|-----------|
+| Framework | React 19 |
+| Routing | TanStack Router v1 |
+| State | Zustand + TanStack Query |
+| UI | shadcn/ui + Radix UI |
+| Styling | Tailwind CSS v4 |
+| Charts | Recharts |
+| Forms | React Hook Form + Zod |
+| Build | Vite 8 |
+| Package Manager | pnpm |
 
-**Build Tool:** [Vite](https://vitejs.dev/)
+## Getting Started
 
-**Routing:** [TanStack Router](https://tanstack.com/router/latest)
+### Prerequisites
 
-**Type Checking:** [TypeScript](https://www.typescriptlang.org/)
+- Node.js 18+
+- pnpm 9+
 
-**Linting/Formatting:** [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)
-
-**Icons:** [Lucide Icons](https://lucide.dev/icons/), [Tabler Icons](https://tabler.io/icons) (Brand icons only)
-
-**Auth (partial):** [Clerk](https://go.clerk.com/GttUAaK)
-
-## Run Locally
-
-Clone the project
-
-```bash
-  git clone https://github.com/satnaing/shadcn-admin.git
-```
-
-Go to the project directory
+### Installation
 
 ```bash
-  cd shadcn-admin
+git clone https://github.com/akshay-bendadi/nexus-panel.git
+cd nexus-panel
+pnpm install
+pnpm dev
 ```
 
-Install dependencies
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-```bash
-  pnpm install
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Production build |
+| `pnpm preview` | Preview production build |
+| `pnpm lint` | Run ESLint |
+| `pnpm format` | Format with Prettier |
+| `pnpm test` | Run tests |
+| `pnpm test:coverage` | Run tests with coverage |
+
+## Project Structure
+
+```
+src/
+├── assets/          # Icons, logos, brand assets
+├── components/      # Shared UI components
+│   ├── layout/      # App shell (sidebar, header, nav)
+│   ├── data-table/  # Reusable table primitives
+│   └── ui/          # shadcn/ui components
+├── context/         # React context providers
+├── features/        # Feature-based modules
+│   ├── apps/        # App integrations page
+│   ├── dashboard/   # Dashboard with charts
+│   ├── errors/      # Error pages
+│   ├── settings/    # Settings pages
+│   ├── tasks/       # Task management
+│   └── users/       # User management
+├── hooks/           # Custom React hooks
+├── lib/             # Utilities (cookies, errors, utils)
+├── routes/          # TanStack Router file-based routes
+├── stores/          # Zustand stores
+└── styles/          # Global CSS and theme variables
 ```
 
-Start the server
+## Pages
 
-```bash
-  pnpm run dev
-```
+| Route | Description |
+|-------|-------------|
+| `/` | Main dashboard with charts and KPIs |
+| `/users` | User management with data table |
+| `/tasks` | Task management with CRUD operations |
+| `/apps` | Third-party app integrations |
+| `/settings` | Profile settings |
+| `/settings/account` | Account settings |
+| `/settings/appearance` | Theme and font preferences |
+| `/settings/notifications` | Notification preferences |
+| `/settings/display` | Display density options |
+| `/errors/$error` | Dynamic error pages |
 
-## Sponsoring this project ❤️
+## Customization
 
-If you find this project helpful or use this in your own work, consider [sponsoring me](https://github.com/sponsors/satnaing) to support development and maintenance. You can [buy me a coffee](https://buymeacoffee.com/satnaing) as well. Don’t worry, every penny helps. Thank you! 🙏
+### Colors
+Edit `src/styles/theme.css` to change the color palette. The theme uses OKLCH color space for perceptually uniform colors.
 
-For questions or sponsorship inquiries, feel free to reach out at [satnaingdev@gmail.com](mailto:satnaingdev@gmail.com).
+### Navigation
+Edit `src/components/layout/data/sidebar-data.ts` to add, remove, or reorganize navigation items.
 
-### Current Sponsor
-
-- [Clerk](https://go.clerk.com/GttUAaK) - authentication and user management for the modern web
-
-## Author
-
-Crafted with 🤍 by [@satnaing](https://github.com/satnaing)
+### Layout
+The config drawer (gear icon in the header) lets you switch sidebar variants and layout densities at runtime.
 
 ## License
 
-Licensed under the [MIT License](https://choosealicense.com/licenses/mit/)
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+Built by [akshay-bendadi](https://github.com/akshay-bendadi)
