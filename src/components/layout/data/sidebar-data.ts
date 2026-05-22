@@ -1,23 +1,22 @@
 import {
   LayoutDashboard,
-  ListTodo,
-  Bug,
-  FileX,
-  Lock,
-  Bell,
-  Package,
-  Palette,
-  ServerOff,
-  Settings,
-  Wrench,
-  UserCog,
-  UserX,
-  Users,
-  Construction,
-  Monitor,
-  GalleryVerticalEnd,
-  AudioWaveform,
+  ListChecks,
+  Users2,
+  Puzzle,
+  Settings2,
+  ServerCrash,
+  UserCircle,
+  ShieldAlert,
+  Ban,
+  FileQuestion,
+  HardHat,
   Activity,
+  Layers,
+  Zap,
+  Wrench,
+  Palette,
+  Bell,
+  Monitor,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -35,18 +34,18 @@ export const sidebarData: SidebarData = {
     },
     {
       name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
+      logo: Layers,
       plan: 'Pro',
     },
     {
       name: 'Acme Corp.',
-      logo: AudioWaveform,
+      logo: Zap,
       plan: 'Startup',
     },
   ],
   navGroups: [
     {
-      title: 'General',
+      title: 'Core',
       items: [
         {
           title: 'Dashboard',
@@ -56,67 +55,67 @@ export const sidebarData: SidebarData = {
         {
           title: 'Tasks',
           url: '/tasks',
-          icon: ListTodo,
-        },
-        {
-          title: 'Apps',
-          url: '/apps',
-          icon: Package,
+          icon: ListChecks,
         },
         {
           title: 'Users',
           url: '/users',
-          icon: Users,
+          icon: Users2,
+        },
+        {
+          title: 'Integrations',
+          url: '/apps',
+          icon: Puzzle,
         },
       ],
     },
     {
-      title: 'Pages',
+      title: 'System',
       items: [
         {
-          title: 'Errors',
-          icon: Bug,
+          title: 'Error Pages',
+          icon: ShieldAlert,
           items: [
             {
               title: 'Unauthorized',
               url: '/errors/unauthorized',
-              icon: Lock,
+              icon: Ban,
             },
             {
               title: 'Forbidden',
               url: '/errors/forbidden',
-              icon: UserX,
+              icon: ShieldAlert,
             },
             {
               title: 'Not Found',
               url: '/errors/not-found',
-              icon: FileX,
+              icon: FileQuestion,
             },
             {
               title: 'Internal Server Error',
               url: '/errors/internal-server-error',
-              icon: ServerOff,
+              icon: ServerCrash,
             },
             {
-              title: 'Maintenance Error',
+              title: 'Maintenance',
               url: '/errors/maintenance-error',
-              icon: Construction,
+              icon: HardHat,
             },
           ],
         },
       ],
     },
     {
-      title: 'Other',
+      title: 'Preferences',
       items: [
         {
           title: 'Settings',
-          icon: Settings,
+          icon: Settings2,
           items: [
             {
               title: 'Profile',
               url: '/settings',
-              icon: UserCog,
+              icon: UserCircle,
             },
             {
               title: 'Account',

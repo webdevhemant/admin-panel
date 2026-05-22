@@ -1,6 +1,6 @@
 import { type ChangeEvent, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { SlidersHorizontal, ArrowUpAZ, ArrowDownAZ } from 'lucide-react'
+import { SlidersHorizontal, ArrowUpAZ, ArrowDownAZ, Puzzle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -93,13 +93,16 @@ export function Apps() {
 
       {/* ===== Content ===== */}
       <Main fixed>
-        <div>
-          <h1 className='text-2xl font-bold tracking-tight'>
-            App Integrations
-          </h1>
-          <p className='text-muted-foreground'>
-            Here&apos;s a list of your apps for the integration!
-          </p>
+        <div className='flex items-center gap-3'>
+          <div className='flex size-10 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10'>
+            <Puzzle className='size-5 text-blue-600 dark:text-blue-400' />
+          </div>
+          <div>
+            <h1 className='text-2xl font-bold tracking-tight'>Integrations</h1>
+            <p className='text-sm text-muted-foreground'>
+              Connect and manage your third-party app integrations.
+            </p>
+          </div>
         </div>
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
