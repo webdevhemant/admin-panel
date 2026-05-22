@@ -67,8 +67,8 @@ export function Overview() {
             borderRadius: '10px',
             fontSize: 12,
           }}
-          formatter={(value: number, name: string) => [
-            name === 'requests' ? fmt(value) : value.toLocaleString(),
+          formatter={(value, name) => [
+            name === 'requests' ? fmt(Number(value)) : Number(value).toLocaleString(),
             name === 'requests' ? 'Requests' : 'Errors',
           ]}
         />
