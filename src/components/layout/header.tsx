@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
+import { useTheme } from '@/context/theme-provider'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
 type HeaderProps = React.HTMLAttributes<HTMLElement> & {
@@ -9,40 +9,69 @@ type HeaderProps = React.HTMLAttributes<HTMLElement> & {
 }
 
 export function Header({ className, fixed, children, ...props }: HeaderProps) {
-  const [offset, setOffset] = useState(0)
+  const [scrolled, setScrolled] = useState(false)
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   useEffect(() => {
     const onScroll = () => {
-      setOffset(document.body.scrollTop || document.documentElement.scrollTop)
+      setScrolled((document.body.scrollTop || document.documentElement.scrollTop) > 10)
     }
-
-    // Add scroll listener to the body
     document.addEventListener('scroll', onScroll, { passive: true })
-
-    // Clean up the event listener on unmount
     return () => document.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <header
       className={cn(
-        'z-50 h-16',
+        'relative z-50 h-14',
         fixed && 'header-fixed peer/header sticky top-0 w-[inherit]',
-        offset > 10 && fixed ? 'shadow' : 'shadow-none',
-        className
+        className,
       )}
       {...props}
     >
+      {/* Glass backdrop */}
       <div
         className={cn(
-          'relative flex h-full items-center gap-3 p-4 sm:gap-4',
-          offset > 10 &&
-            fixed &&
-            'after:absolute after:inset-0 after:-z-10 after:bg-background/20 after:backdrop-blur-lg'
+          'pointer-events-none absolute inset-0 transition-all duration-300',
+          scrolled && fixed
+            ? isDark
+              ? 'border-b border-white/[0.06] bg-[oklch(0.1_0.025_264)]/80 backdrop-blur-xl'
+              : 'border-b border-black/[0.05] bg-white/80 backdrop-blur-xl'
+            : isDark
+              ? 'border-b border-white/[0.04] bg-[oklch(0.1_0.025_264)]/60'
+              : 'border-b border-black/[0.04] bg-white/60',
         )}
-      >
-        <SidebarTrigger variant='outline' className='max-md:scale-125' />
-        <Separator orientation='vertical' className='h-6' />
+      />
+
+      {/* Subtle top accent line in dark mode */}
+      {isDark && (
+        <div
+          aria-hidden
+          className='pointer-events-none absolute inset-x-0 top-0 h-px'
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.4) 40%, rgba(139,92,246,0.4) 60%, transparent 100%)',
+          }}
+        />
+      )}
+
+      <div className='relative flex h-full items-center gap-2 px-4'>
+        <SidebarTrigger
+          className={cn(
+            'size-8 shrink-0 rounded-lg transition-colors duration-150',
+            isDark
+              ? 'text-white/50 hover:bg-white/[0.07] hover:text-white/90'
+              : 'text-gray-500 hover:bg-black/[0.05] hover:text-gray-900',
+          )}
+        />
+
+        {/* Divider */}
+        <div
+          className='h-5 w-px shrink-0'
+          style={{ background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }}
+        />
+
         {children}
       </div>
     </header>

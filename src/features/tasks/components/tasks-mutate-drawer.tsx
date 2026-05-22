@@ -134,26 +134,20 @@ export function TasksMutateDrawer({
                       defaultValue={field.value}
                       className='flex flex-col space-y-1'
                     >
-                      <FormItem className='flex items-center'>
-                        <FormControl>
-                          <RadioGroupItem value='documentation' />
-                        </FormControl>
-                        <FormLabel className='font-normal'>
-                          Documentation
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className='flex items-center'>
-                        <FormControl>
-                          <RadioGroupItem value='feature' />
-                        </FormControl>
-                        <FormLabel className='font-normal'>Feature</FormLabel>
-                      </FormItem>
-                      <FormItem className='flex items-center'>
-                        <FormControl>
-                          <RadioGroupItem value='bug' />
-                        </FormControl>
-                        <FormLabel className='font-normal'>Bug</FormLabel>
-                      </FormItem>
+                      {[
+                        { value: 'bug',         label: 'Bug' },
+                        { value: 'feature',     label: 'Feature' },
+                        { value: 'improvement', label: 'Improvement' },
+                        { value: 'infra',       label: 'Infra' },
+                        { value: 'security',    label: 'Security' },
+                      ].map((opt) => (
+                        <FormItem key={opt.value} className='flex items-center'>
+                          <FormControl>
+                            <RadioGroupItem value={opt.value} />
+                          </FormControl>
+                          <FormLabel className='font-normal'>{opt.label}</FormLabel>
+                        </FormItem>
+                      ))}
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />

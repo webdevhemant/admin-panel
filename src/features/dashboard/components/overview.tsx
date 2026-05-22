@@ -1,82 +1,98 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 const data = [
-  {
-    name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
-  {
-    name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000,
-  },
+  { month: 'Jan', requests: 312000, errors: 1400 },
+  { month: 'Feb', requests: 428000, errors: 2100 },
+  { month: 'Mar', requests: 391000, errors: 1800 },
+  { month: 'Apr', requests: 567000, errors: 2400 },
+  { month: 'May', requests: 623000, errors: 1950 },
+  { month: 'Jun', requests: 718000, errors: 2800 },
+  { month: 'Jul', requests: 834000, errors: 3100 },
+  { month: 'Aug', requests: 791000, errors: 2600 },
+  { month: 'Sep', requests: 912000, errors: 3400 },
+  { month: 'Oct', requests: 1054000, errors: 4200 },
+  { month: 'Nov', requests: 1180000, errors: 3800 },
+  { month: 'Dec', requests: 1243000, errors: 4900 },
 ]
+
+function fmt(v: number) {
+  if (v >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`
+  if (v >= 1000) return `${(v / 1000).toFixed(0)}K`
+  return String(v)
+}
 
 export function Overview() {
   return (
-    <ResponsiveContainer width='100%' height={350}>
-      <BarChart data={data}>
+    <ResponsiveContainer width='100%' height={300}>
+      <AreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
+        <defs>
+          <linearGradient id='reqGradient' x1='0' y1='0' x2='0' y2='1'>
+            <stop offset='5%' stopColor='var(--color-primary)' stopOpacity={0.25} />
+            <stop offset='95%' stopColor='var(--color-primary)' stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id='errGradient' x1='0' y1='0' x2='0' y2='1'>
+            <stop offset='5%' stopColor='#f43f5e' stopOpacity={0.2} />
+            <stop offset='95%' stopColor='#f43f5e' stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray='3 3' className='stroke-border/40' vertical={false} />
         <XAxis
-          dataKey='name'
-          stroke='#888888'
-          fontSize={12}
+          dataKey='month'
+          stroke='transparent'
+          tick={{ fontSize: 11, fill: 'var(--color-muted-foreground)' }}
           tickLine={false}
           axisLine={false}
         />
         <YAxis
-          direction='ltr'
-          stroke='#888888'
-          fontSize={12}
+          yAxisId='left'
+          stroke='transparent'
+          tick={{ fontSize: 11, fill: 'var(--color-muted-foreground)' }}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={fmt}
+          width={42}
         />
-        <Bar
-          dataKey='total'
-          fill='currentColor'
-          radius={[4, 4, 0, 0]}
-          className='fill-primary'
+        <Tooltip
+          contentStyle={{
+            background: 'var(--color-popover)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '10px',
+            fontSize: 12,
+          }}
+          formatter={(value: number, name: string) => [
+            name === 'requests' ? fmt(value) : value.toLocaleString(),
+            name === 'requests' ? 'Requests' : 'Errors',
+          ]}
         />
-      </BarChart>
+        <Area
+          yAxisId='left'
+          type='monotone'
+          dataKey='requests'
+          stroke='var(--color-primary)'
+          strokeWidth={2}
+          fill='url(#reqGradient)'
+          dot={false}
+          activeDot={{ r: 4 }}
+        />
+        <Area
+          yAxisId='left'
+          type='monotone'
+          dataKey='errors'
+          stroke='#f43f5e'
+          strokeWidth={1.5}
+          fill='url(#errGradient)'
+          dot={false}
+          activeDot={{ r: 3 }}
+        />
+      </AreaChart>
     </ResponsiveContainer>
   )
 }

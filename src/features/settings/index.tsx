@@ -1,6 +1,5 @@
 import { Outlet } from '@tanstack/react-router'
 import { Monitor, Bell, Palette, Wrench, UserCircle } from 'lucide-react'
-import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
@@ -42,7 +41,6 @@ export function Settings() {
       <Header>
         <Search className='me-auto' />
         <ThemeSwitch />
-        <ConfigDrawer />
         <ProfileDropdown />
       </Header>
 

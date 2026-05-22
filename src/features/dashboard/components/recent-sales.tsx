@@ -1,88 +1,100 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { GitBranch, Globe, Server } from 'lucide-react'
 
-const sales = [
+const deploys = [
   {
-    name: 'Olivia Martin',
-    email: 'olivia.martin@email.com',
-    avatar: '/avatars/01.png',
-    fallback: 'OM',
-    amount: '+$1,999.00',
-    status: 'completed',
+    id: 'd-7f3a1',
+    app: 'api-gateway',
+    branch: 'main',
+    env: 'production',
+    status: 'success',
+    author: 'Hemant B.',
+    ago: '2 min ago',
   },
   {
-    name: 'Jackson Lee',
-    email: 'jackson.lee@email.com',
-    avatar: '/avatars/02.png',
-    fallback: 'JL',
-    amount: '+$39.00',
-    status: 'pending',
+    id: 'd-6e2b9',
+    app: 'auth-service',
+    branch: 'feat/oauth2',
+    env: 'staging',
+    status: 'running',
+    author: 'Riya S.',
+    ago: '18 min ago',
   },
   {
-    name: 'Isabella Nguyen',
-    email: 'isabella.nguyen@email.com',
-    avatar: '/avatars/03.png',
-    fallback: 'IN',
-    amount: '+$299.00',
-    status: 'completed',
+    id: 'd-5c4d8',
+    app: 'dashboard-ui',
+    branch: 'fix/sidebar',
+    env: 'preview',
+    status: 'success',
+    author: 'Aditya K.',
+    ago: '1 hr ago',
   },
   {
-    name: 'William Kim',
-    email: 'will@email.com',
-    avatar: '/avatars/04.png',
-    fallback: 'WK',
-    amount: '+$99.00',
-    status: 'completed',
-  },
-  {
-    name: 'Sofia Davis',
-    email: 'sofia.davis@email.com',
-    avatar: '/avatars/05.png',
-    fallback: 'SD',
-    amount: '+$39.00',
+    id: 'd-4b7f2',
+    app: 'worker-jobs',
+    branch: 'main',
+    env: 'production',
     status: 'failed',
+    author: 'Hemant B.',
+    ago: '3 hr ago',
+  },
+  {
+    id: 'd-3a9c6',
+    app: 'notification-svc',
+    branch: 'chore/bump-deps',
+    env: 'staging',
+    status: 'success',
+    author: 'Priya M.',
+    ago: '6 hr ago',
   },
 ]
 
-const statusStyles: Record<string, string> = {
-  completed: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
-  pending: 'bg-amber-500/10 text-amber-600 border-amber-500/20',
-  failed: 'bg-rose-500/10 text-rose-600 border-rose-500/20',
+const statusConfig: Record<string, { label: string; cls: string; dot: string }> = {
+  success: { label: 'Deployed', cls: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20', dot: 'bg-emerald-500' },
+  running: { label: 'Deploying', cls: 'bg-blue-500/10 text-blue-600 border-blue-500/20', dot: 'bg-blue-500 animate-pulse' },
+  failed:  { label: 'Failed',   cls: 'bg-rose-500/10 text-rose-600 border-rose-500/20',   dot: 'bg-rose-500' },
+}
+
+const envIcon: Record<string, React.ElementType> = {
+  production: Globe,
+  staging:    Server,
+  preview:    Server,
 }
 
 export function RecentSales() {
   return (
     <div className='divide-y divide-border'>
-      {sales.map((sale) => (
-        <div
-          key={sale.email}
-          className='flex items-center gap-3 py-3 first:pt-0 last:pb-0'
-        >
-          <Avatar className='h-9 w-9 shrink-0'>
-            <AvatarImage src={sale.avatar} alt={sale.name} />
-            <AvatarFallback className='text-xs'>{sale.fallback}</AvatarFallback>
-          </Avatar>
-          <div className='flex flex-1 items-center justify-between gap-2 min-w-0'>
-            <div className='min-w-0'>
-              <p className='text-sm font-medium leading-none truncate'>
-                {sale.name}
-              </p>
-              <p className='text-xs text-muted-foreground mt-0.5 truncate'>
-                {sale.email}
-              </p>
+      {deploys.map((d) => {
+        const s = statusConfig[d.status]
+        const EnvIcon = envIcon[d.env] ?? Server
+        return (
+          <div key={d.id} className='flex items-start gap-3 py-3 first:pt-0 last:pb-0'>
+            {/* Status dot + icon */}
+            <div className='mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted'>
+              <EnvIcon className='size-3.5 text-muted-foreground' />
             </div>
-            <div className='flex flex-col items-end gap-1 shrink-0'>
-              <span className='text-sm font-semibold'>{sale.amount}</span>
-              <Badge
-                variant='outline'
-                className={`text-[10px] px-1.5 py-0 h-4 capitalize ${statusStyles[sale.status]}`}
-              >
-                {sale.status}
-              </Badge>
+
+            <div className='flex flex-1 items-center justify-between gap-2 min-w-0'>
+              <div className='min-w-0'>
+                <p className='text-sm font-semibold truncate'>{d.app}</p>
+                <div className='flex items-center gap-1 mt-0.5'>
+                  <GitBranch className='size-3 text-muted-foreground shrink-0' />
+                  <span className='text-[11px] text-muted-foreground truncate font-mono'>{d.branch}</span>
+                </div>
+                <p className='text-[10px] text-muted-foreground/70 mt-0.5'>{d.author} · {d.ago}</p>
+              </div>
+
+              <div className='flex flex-col items-end gap-1 shrink-0'>
+                <Badge variant='outline' className={`text-[10px] px-1.5 py-0 h-4 ${s.cls}`}>
+                  <span className={`mr-1 size-1.5 rounded-full inline-block ${s.dot}`} />
+                  {s.label}
+                </Badge>
+                <span className='text-[10px] font-mono text-muted-foreground/60'>{d.id}</span>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
