@@ -121,7 +121,6 @@ function BrandHeader({ isDark }: { isDark: boolean }) {
   const { isMobile, state } = useSidebar()
   const isCollapsed = state === 'collapsed' && !isMobile
   const [activeTeam, setActiveTeam] = React.useState(sidebarData.teams[0])
-  const Logo = activeTeam.logo
 
   const logoStyle = isDark
     ? { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', boxShadow: '0 0 16px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.15)' }
@@ -172,7 +171,7 @@ function BrandHeader({ isDark }: { isDark: boolean }) {
               className='flex size-9 items-center justify-center rounded-xl outline-none transition-opacity duration-150 hover:opacity-80'
               style={logoStyle}
             >
-              <Logo className='size-4 text-white' />
+              <span className='text-sm font-bold text-white'>H</span>
             </button>
           </DropdownMenuTrigger>
           {dropdownContent}
@@ -193,7 +192,7 @@ function BrandHeader({ isDark }: { isDark: boolean }) {
           )}
         >
           <div className='flex size-9 shrink-0 items-center justify-center rounded-xl' style={logoStyle}>
-            <Logo className='size-4 text-white' />
+            <span className='text-sm font-bold text-white'>H</span>
           </div>
           <div className='min-w-0 flex-1'>
             <p
