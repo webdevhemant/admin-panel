@@ -27,7 +27,7 @@ export const sidebarData: SidebarData = {
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
-    { name: 'Nexus Panel', logo: Activity,  plan: 'Enterprise' },
+    { name: 'Horizon Panel', logo: Activity,  plan: 'Enterprise' },
     { name: 'Acme Inc',    logo: Layers,    plan: 'Pro'        },
     { name: 'Acme Corp.',  logo: Zap,       plan: 'Startup'    },
   ],
