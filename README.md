@@ -39,7 +39,7 @@ A modern, production-ready admin dashboard built with React 19, TanStack Router,
 ### Installation
 
 ```bash
-git clone https://github.com/akshay-bendadi/nexus-panel.git
+git clone https://github.com/webdevhemant/admin-panel.git
 cd nexus-panel
 pnpm install
 pnpm dev
@@ -115,4 +115,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-Built by [akshay-bendadi](https://github.com/akshay-bendadi)
+Built by [webdevhemant](https://github.com/webdevhemant)
