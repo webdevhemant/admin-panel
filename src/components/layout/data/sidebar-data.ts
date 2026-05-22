@@ -21,8 +21,8 @@ import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: 'Akshay Bendadi',
-    email: 'akshaybendadi@gmail.com',
+    name: 'Hemant Bendadi',
+    email: 'hemant.dev.upwork@gmail.com',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
